@@ -2,9 +2,8 @@ import { LucideX, LucideUser, LucideMail } from "lucide-react"
 import { FormEvent } from "react"
 import { Button } from "../../components/button"
 import { DateRange } from "react-day-picker"
-import { setDefaultOptions } from "date-fns"
-import { ptBR } from "date-fns/locale/pt-BR"
-import { formatedDateRange } from "../../utils/formatedDateRange"
+import { setDefaultOptions, format } from "date-fns"
+import { ptBR } from "date-fns/locale"
 
 setDefaultOptions({ locale: ptBR })
 
@@ -25,6 +24,16 @@ export function ConfirmTripModal({
   destination,
   eventStartAndEndDates
 }: ConfirmTripModalProps) {
+  function formatedDateRange(dates: DateRange | undefined) {
+    if (!dates || !dates.from || !dates.to) {
+      return
+    }
+  
+    const formattedFrom = format(dates.from, "d' de 'LLLL")
+    const formattedTo = format(dates.to, "d' de 'LLLL' de 'yyyy")
+    return `${formattedFrom} a ${formattedTo}`
+  }
+
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
       <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">

@@ -1,29 +1,29 @@
-import { LucideX, LucideTag, LucideCalendar } from "lucide-react"
+import { LucideX, LucideTag, LucideLink2 } from "lucide-react"
 import { Button } from "../../components/button"
 import { FormEvent } from "react"
 import { api } from "../../lib/axios"
 import { useParams } from "react-router-dom"
 
-interface CreateActivityModalProps {
-  closeCreateActivityModal: () => void
+interface CreateNewLinkModalProps {
+  closeCreateNewLinkModal: () => void
 }
 
-export function CreateActivityModal({
-  closeCreateActivityModal
-}: CreateActivityModalProps) {
+export function CreateNewLinkModal({
+  closeCreateNewLinkModal,
+}: CreateNewLinkModalProps) {
   const { tripId } = useParams()
 
-  async function createActivity(event: FormEvent<HTMLFormElement>) {
+  async function createNewLink(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const data = new FormData(event.currentTarget)
 
     const title = data.get('title')?.toString()
-    const occurs_at = data.get('occurs_at')?.toString()
+    const url = data.get('url')?.toString()
 
-    await api.post(`/trips/${tripId}/activities`, {
+    await api.post(`/trips/${tripId}/links`, {
       title,
-      occurs_at
+      url
     })
 
     window.document.location.reload()
@@ -34,18 +34,18 @@ export function CreateActivityModal({
       <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Confirmar criação de viagem</h2>
-            <button onClick={closeCreateActivityModal}>
+            <h2 className="text-lg font-semibold">Cadastrar link</h2>
+            <button onClick={closeCreateNewLinkModal}>
               <LucideX className="size-5 text-zinc-400" />
             </button>
           </div>
 
           <p className="text-sm text-zinc-400">
-            Todos convidados podem visualizar as atividades.
+            Todos convidados podem visualizar os links importantes.
           </p>
         </div>
 
-        <form onSubmit={createActivity} className="space-y-3">
+        <form onSubmit={createNewLink} className="space-y-3">
           <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
             <LucideTag className="size-5 text-zinc-400" />
             <input
@@ -53,25 +53,25 @@ export function CreateActivityModal({
               type="text"
               name="title"
               autoComplete="off"
-              placeholder="Qual a atividade?"
+              placeholder="Título do link"
             />
           </div>
 
           <div className="flex items-center gap-2">
             <div className="h-14 flex-1 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
-              <LucideCalendar className="size-5 text-zinc-400" />
+              <LucideLink2 className="size-5 text-zinc-400" />
               <input
                 className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
-                type="datetime-local"
-                name="occurs_at"
+                type="string"
+                name="url"
                 autoComplete="off"
-                placeholder="Data e horário da atividade"
+                placeholder="URL"
               />
             </div>
           </div>
-          
+
           <Button size="full" variant="primary" type="submit">
-            Salvar atividade
+            Salvar link
           </Button>
         </form>
       </div>

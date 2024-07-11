@@ -1,37 +1,60 @@
 import { LucideLink2, LucidePlus } from "lucide-react"
 import { Button } from "../../components/button"
+import { useParams } from "react-router-dom"
+import { api } from "../../lib/axios"
+import { useEffect, useState } from "react"
+import { CreateNewLinkModal } from "./create-new-link-modal"
+
+interface Link {
+  title: string
+  url: string
+}
 
 export function ImportantLinks() {
+  const { tripId } = useParams()
+
+  const [links, setLinks] = useState<Link[]>([])
+
+  const [isCreateNewLinkModalOpen, setIsCreateNewLinkModalOpen] = useState(false)
+
+  useEffect(() => {
+    api.get(`/trips/${tripId}/links`).then(response => setLinks(response.data.links))
+  }, [tripId])
+
+  function openCreateNewLinkModal() {
+    setIsCreateNewLinkModalOpen(true)
+  }
+
+  function closeCreateNewLinkModal() {
+    setIsCreateNewLinkModalOpen(false)
+  }
+
   return (
     <div className="space-y-6">
       <h2 className="font-semibold text-xl">Links importantes</h2>
 
       <div className="space-y-5">
-        <div className="flex items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <span className="block font-medium text-zinc-100">Reserva do AirBnB</span>
-            <a href="#" className="block text-xs text-zinc-400 hover:text-zinc-200 truncate">
-              https://www.airbnb.com.br/rooms/1047000112354648336
-            </a>
+        {links && links.map(link => (
+          <div key={link.url} className="flex items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <span className="block font-medium text-zinc-100">{link.title}</span>
+              <a href={link.url} target="_blank" className="block text-xs text-zinc-400 hover:text-zinc-200 truncate">
+                {link.url}
+              </a>
+            </div>
+            <LucideLink2 className="text-zinc-400 size-5 shrink-0" />
           </div>
-          <LucideLink2 className="text-zinc-400 size-5 shrink-0" />
-        </div>
-
-        <div className="flex items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <span className="block font-medium text-zinc-100">Regras da casa</span>
-            <a href="#" className="block text-xs text-zinc-400 hover:text-zinc-200 truncate">
-              https://www.notion.com/pages/1047000112354648336?adults=13&children=0&infants=0&pets=0&wishlist_item_id=11003621872995&check_in=2024-08-17&check_out=2024-08-26&source_impression_id=p3_1717600906_P3DL0E-bJZzguEci&previous_page_section_name=1000
-            </a>
-          </div>
-          <LucideLink2 className="text-zinc-400 size-5 shrink-0" />
-        </div>
+        ))}
       </div>
 
-      <Button variant="secondary" size="full">
+      <Button onClick={openCreateNewLinkModal} variant="secondary" size="full">
         <LucidePlus className="size-5" />
         Cadastrar novo link
       </Button>
+
+      {isCreateNewLinkModalOpen && (
+        <CreateNewLinkModal closeCreateNewLinkModal={closeCreateNewLinkModal} />
+      )}
     </div>
   )
 }
