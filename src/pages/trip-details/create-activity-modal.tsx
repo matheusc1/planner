@@ -28,7 +28,7 @@ export function CreateActivityModal({
           <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
             <LucideTag className="size-5 text-zinc-400" />
             <input
-              className="bg-transparent text-md placeholder-zinc-400 outline-none flex-1"
+              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
               type="text"
               name="title"
               autoComplete="off"
@@ -40,7 +40,7 @@ export function CreateActivityModal({
             <div className="h-14 flex-1 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
               <LucideCalendar className="size-5 text-zinc-400" />
               <input
-                className="bg-transparent text-md placeholder-zinc-400 outline-none flex-1"
+                className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
                 type="datetime-local"
                 name="occurs_at"
                 autoComplete="off"

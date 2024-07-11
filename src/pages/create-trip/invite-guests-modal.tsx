@@ -48,7 +48,7 @@ export function InviteGuestsModal({
           <div className="px-2 flex flex-1 items-center gap-2">
             <LucideAtSign className="size-5 text-zinc-400" />
             <input
-              className="bg-transparent text-md placeholder-zinc-400 outline-none flex-1"
+              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
               type="email"
               name="email"
               autoComplete="off"
