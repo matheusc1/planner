@@ -1,19 +1,29 @@
 import { LucideX, LucideUser, LucideMail } from "lucide-react"
 import { FormEvent } from "react"
 import { Button } from "../../components/button"
+import { DateRange } from "react-day-picker"
+import { setDefaultOptions } from "date-fns"
+import { ptBR } from "date-fns/locale/pt-BR"
+import { formatedDateRange } from "../../utils/formatedDateRange"
+
+setDefaultOptions({ locale: ptBR })
 
 interface ConfirmTripModalProps {
   closeConfirmTripModal: () => void
   setOwnerName: (name: string) => void
   setOwnerEmail: (email: string) => void
   createTrip: (event: FormEvent<HTMLFormElement>) => void
+  destination: string
+  eventStartAndEndDates: DateRange | undefined
 } 
 
 export function ConfirmTripModal({
   closeConfirmTripModal,
   setOwnerName,
   setOwnerEmail,
-  createTrip
+  createTrip,
+  destination,
+  eventStartAndEndDates
 }: ConfirmTripModalProps) {
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
@@ -27,7 +37,11 @@ export function ConfirmTripModal({
           </div>
 
           <p className="text-sm text-zinc-400">
-            Para concluir a criação da viagem para <span className="text-zinc-100 font-semibold">Florianópolis, Brasil</span> nas datas de <span className="text-zinc-100 font-semibold">16 a 27 de Agosto de 2024</span> preencha seus dados abaixo:
+            Para concluir a criação da viagem para{' '}
+            <span className="text-zinc-100 font-semibold">{destination}</span>{' '}
+            nas datas de <span className="text-zinc-100 font-semibold">
+              {formatedDateRange(eventStartAndEndDates)}
+              </span> preencha seus dados abaixo:
           </p>
         </div>
 
