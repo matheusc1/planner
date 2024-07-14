@@ -4,16 +4,16 @@ import { FormEvent } from "react"
 import { api } from "../../lib/axios"
 import { useParams } from "react-router-dom"
 
-interface CreateNewLinkModalProps {
-  closeCreateNewLinkModal: () => void
+interface RegisterNewLinkModalProps {
+  closeRegisterNewLinkModal: () => void
 }
 
-export function CreateNewLinkModal({
-  closeCreateNewLinkModal,
-}: CreateNewLinkModalProps) {
+export function RegisterNewLinkModal({
+  closeRegisterNewLinkModal,
+}: RegisterNewLinkModalProps) {
   const { tripId } = useParams()
 
-  async function createNewLink(event: FormEvent<HTMLFormElement>) {
+  async function RegisterNewLink(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const data = new FormData(event.currentTarget)
@@ -35,7 +35,7 @@ export function CreateNewLinkModal({
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Cadastrar link</h2>
-            <button onClick={closeCreateNewLinkModal}>
+            <button onClick={closeRegisterNewLinkModal}>
               <LucideX className="size-5 text-zinc-400" />
             </button>
           </div>
@@ -45,7 +45,7 @@ export function CreateNewLinkModal({
           </p>
         </div>
 
-        <form onSubmit={createNewLink} className="space-y-3">
+        <form onSubmit={RegisterNewLink} className="space-y-3">
           <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
             <LucideTag className="size-5 text-zinc-400" />
             <input

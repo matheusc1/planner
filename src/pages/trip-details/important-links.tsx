@@ -3,7 +3,7 @@ import { Button } from "../../components/button"
 import { useParams } from "react-router-dom"
 import { api } from "../../lib/axios"
 import { useEffect, useState } from "react"
-import { CreateNewLinkModal } from "./create-new-link-modal"
+import { RegisterNewLinkModal } from "./register-new-link-modal"
 
 interface Link {
   title: string
@@ -15,18 +15,18 @@ export function ImportantLinks() {
 
   const [links, setLinks] = useState<Link[]>([])
 
-  const [isCreateNewLinkModalOpen, setIsCreateNewLinkModalOpen] = useState(false)
+  const [isRegisterNewLinkModalOpen, setIsRegisterNewLinkModalOpen] = useState(false)
 
   useEffect(() => {
     api.get(`/trips/${tripId}/links`).then(response => setLinks(response.data.links))
   }, [tripId])
 
-  function openCreateNewLinkModal() {
-    setIsCreateNewLinkModalOpen(true)
+  function openRegisterNewLinkModal() {
+    setIsRegisterNewLinkModalOpen(true)
   }
 
-  function closeCreateNewLinkModal() {
-    setIsCreateNewLinkModalOpen(false)
+  function closeRegisterNewLinkModal() {
+    setIsRegisterNewLinkModalOpen(false)
   }
 
   return (
@@ -47,13 +47,13 @@ export function ImportantLinks() {
         ))}
       </div>
 
-      <Button onClick={openCreateNewLinkModal} variant="secondary" size="full">
+      <Button onClick={openRegisterNewLinkModal} variant="secondary" size="full">
         <LucidePlus className="size-5" />
         Cadastrar novo link
       </Button>
 
-      {isCreateNewLinkModalOpen && (
-        <CreateNewLinkModal closeCreateNewLinkModal={closeCreateNewLinkModal} />
+      {isRegisterNewLinkModalOpen && (
+        <RegisterNewLinkModal closeRegisterNewLinkModal={closeRegisterNewLinkModal} />
       )}
     </div>
   )
