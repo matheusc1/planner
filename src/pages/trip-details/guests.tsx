@@ -3,6 +3,7 @@ import { Button } from "../../components/button"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { api } from "../../lib/axios"
+import { InviteNewGuestModal } from "./invite-new-guest-modal"
 
 interface Participant {
   id: string
@@ -14,6 +15,16 @@ interface Participant {
 export function Guests() {
   const { tripId } = useParams()
   const [participants, setParticipants] = useState<Participant[]>([])
+
+  const [isInviteNewGuestModalOpen, setIsInviteNewGuestModalOpen] = useState(false)
+
+  function openInviteNewGuestModal() {
+    setIsInviteNewGuestModalOpen(true)
+  }
+
+  function closeInviteNewGuestModal() {
+    setIsInviteNewGuestModalOpen(false)
+  }
 
   useEffect(() => {
     api.get(`/trips/${tripId}/participants`).then(response => setParticipants(response.data.participants))
@@ -41,10 +52,14 @@ export function Guests() {
         ))}
       </div>
 
-      <Button variant="secondary" size="full">
+      <Button onClick={openInviteNewGuestModal} variant="secondary" size="full">
         <LucideUserCog className="size-5" />
         Gerenciar convidados
       </Button>
+
+      {isInviteNewGuestModalOpen && (
+        <InviteNewGuestModal closeInviteNewGuestModal={closeInviteNewGuestModal} />
+      )}
     </div>
   )
 }
