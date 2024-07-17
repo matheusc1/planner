@@ -3,8 +3,10 @@ import { Button } from "../../components/button"
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { api } from "../../lib/axios"
-import { format, setDefaultOptions } from "date-fns"
+import { setDefaultOptions } from "date-fns"
 import { ptBR } from "date-fns/locale/pt-BR"
+import { ChangeDestinationAndDateModal } from "./change-destination-and-date-modal"
+import { formatDate } from "../../utils/formatDate"
 
 setDefaultOptions({ locale: ptBR })
 
@@ -20,12 +22,22 @@ export function DestinationAndDateHeader() {
   const { tripId } = useParams()
   const [trip, setTrip] = useState<Trip | undefined>()
 
+  const [isChangeDestinationAndDateModalOpen, setIsChangeDestinationAndDateModalOpen] = useState(false)
+
+  function openChangeDestinationAndDateModal() {
+    setIsChangeDestinationAndDateModalOpen(true)
+  }
+
+  function closeChangeDestinationAndDateModal() {
+    setIsChangeDestinationAndDateModalOpen(false)
+  }
+
   useEffect(() => {
     api.get(`/trips/${tripId}`).then(response => setTrip(response.data.trip))
   }, [tripId])
 
   const displayedDate = trip
-    ? format(trip.starts_at, "d' de 'LLLL").concat(' a ').concat(format(trip.ends_at, "d' de 'LLLL' de 'yyyy")) 
+    ? formatDate(trip.starts_at, trip.ends_at) 
     : null
 
   return (
@@ -43,11 +55,20 @@ export function DestinationAndDateHeader() {
 
         <div className="w-px h-6 bg-zinc-800" />
 
-        <Button variant="secondary">
+        <Button onClick={openChangeDestinationAndDateModal} variant="secondary">
           Alterar local/data
           <LucideSettings2 className="size-5" />
         </Button>
       </div>
+
+      {isChangeDestinationAndDateModalOpen && (
+        <ChangeDestinationAndDateModal
+          closeChangeDestinationAndDateModal={closeChangeDestinationAndDateModal}
+          destination={trip?.destination}
+          trip_ends_at={trip?.ends_at}
+          trip_start_at={trip?.starts_at}
+        />
+      )}
     </div>
   )
 }

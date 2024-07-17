@@ -2,8 +2,9 @@ import { LucideX, LucideUser, LucideMail } from "lucide-react"
 import { FormEvent } from "react"
 import { Button } from "../../components/button"
 import { DateRange } from "react-day-picker"
-import { setDefaultOptions, format } from "date-fns"
+import { setDefaultOptions } from "date-fns"
 import { ptBR } from "date-fns/locale"
+import { formatDateRange } from "../../utils/formatDate"
 
 setDefaultOptions({ locale: ptBR })
 
@@ -24,15 +25,7 @@ export function ConfirmTripModal({
   destination,
   eventStartAndEndDates
 }: ConfirmTripModalProps) {
-  function formatedDateRange(dates: DateRange | undefined) {
-    if (!dates || !dates.from || !dates.to) {
-      return
-    }
-  
-    const formattedFrom = format(dates.from, "d' de 'LLLL")
-    const formattedTo = format(dates.to, "d' de 'LLLL' de 'yyyy")
-    return `${formattedFrom} a ${formattedTo}`
-  }
+  const tripDate = eventStartAndEndDates ? formatDateRange(eventStartAndEndDates) : ''
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
@@ -49,7 +42,7 @@ export function ConfirmTripModal({
             Para concluir a criação da viagem para{' '}
             <span className="text-zinc-100 font-semibold">{destination}</span>{' '}
             nas datas de <span className="text-zinc-100 font-semibold">
-              {formatedDateRange(eventStartAndEndDates)}
+              {tripDate}
               </span> preencha seus dados abaixo:
           </p>
         </div>

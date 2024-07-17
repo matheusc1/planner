@@ -2,8 +2,8 @@ import { LucideMapPin, LucideCalendar, LucideSettings2, LucideArrowRight, Lucide
 import { Button } from "../../../components/button"
 import { useState } from "react"
 import { DateRange, DayPicker } from "react-day-picker"
-import { format } from 'date-fns'
 import "react-day-picker/dist/style.css"
+import { formatDateRange } from "../../../utils/formatDate"
 
 interface DestinationAndDateStepProps {
   isGuestsInputOpen: boolean
@@ -32,9 +32,7 @@ export function DestinationAndDateStep({
     setIsDatePickerOpen(false)
   }
 
-  const displayedDate = eventStartAndEndDates && eventStartAndEndDates.from && eventStartAndEndDates.to
-    ? format(eventStartAndEndDates.from, "d' de 'LLL").concat(' até ').concat(format(eventStartAndEndDates.to, "d' de 'LLL")) 
-    : 'Quando?'
+  const displayedDate = eventStartAndEndDates ? formatDateRange(eventStartAndEndDates) : 'Quando?'
 
   return (
     <div className="h-16 bg-zinc-900 p-4 rounded-xl flex items-center shadow-shape gap-3">
