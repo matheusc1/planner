@@ -47,7 +47,7 @@ export function DestinationAndDateStep({
         />
       </div>
 
-      <button onClick={openDatePicker} disabled={isGuestsInputOpen} className="flex items-center gap-2 text-left">
+      <button data-testid="date-button" onClick={openDatePicker} disabled={isGuestsInputOpen} className="flex items-center gap-2 text-left">
         <LucideCalendar className="size-5 text-zinc-400" />
         <span className="text-lg text-zinc-400 w-56">
           {displayedDate}
@@ -60,7 +60,7 @@ export function DestinationAndDateStep({
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold">Selecione a data</h2>
-                <button onClick={closeDatePicker}>
+                <button data-testid="close-date-picker" onClick={closeDatePicker}>
                   <LucideX className="size-5 text-zinc-400" />
                 </button>
               </div>

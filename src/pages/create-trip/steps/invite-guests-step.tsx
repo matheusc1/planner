@@ -14,7 +14,7 @@ export function InviteGuestsStep({
 }: InviteGuestsStepProps) {
   return (
     <div className="h-16 bg-zinc-900 p-4 rounded-xl flex items-center shadow-shape gap-3">
-      <button type="button" onClick={openGuestsModal} className="flex items-center gap-2 flex-1 text-left">
+      <button type="button" data-testid="guests-button" onClick={openGuestsModal} className="flex items-center gap-2 flex-1 text-left">
         <LucideUserRoundPlus className="size-5 text-zinc-400" />
         {emailsToInvite.length > 0 ? (
           <span className="text-zinc-100 text-lg flex-1">

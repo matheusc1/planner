@@ -38,7 +38,7 @@ export function ConfirmTripModal({
             </button>
           </div>
 
-          <p className="text-sm text-zinc-400">
+          <p data-testid="confirm-trip-text" className="text-sm text-zinc-400">
             Para concluir a criação da viagem para{' '}
             <span className="text-zinc-100 font-semibold">{destination}</span>{' '}
             nas datas de <span className="text-zinc-100 font-semibold">
