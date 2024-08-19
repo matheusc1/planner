@@ -9,7 +9,6 @@ const nextMonthDate = add(currentDate, { months: 1 })
 const nextMonth = format(nextMonthDate, 'MMM', { locale: ptBR })
 
 async function setupTrip(page: Page, location: string, startDay: string, endDay: string) {
-  await page.goto('/', { waitUntil: 'networkidle' })
   await page.getByPlaceholder('Para onde você vai?').fill(location)
   await page.locator('[data-testid="date-button"]').click()
   await page.getByRole('gridcell', { name: startDay }).click()
