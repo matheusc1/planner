@@ -110,7 +110,7 @@ export function ChangeDestinationAndDateModal({
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold">Selecione a data</h2>
-                <button onClick={closeDatePicker}>
+                <button data-testid="close-date-picker" onClick={closeDatePicker}>
                   <LucideX className="size-5 text-zinc-400" />
                 </button>
               </div>
