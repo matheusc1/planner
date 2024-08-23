@@ -9,7 +9,7 @@ Planner é um planejador de viagens onde é possível convidar amigos, registrar
 - **Tailwind CSS**: Framework de CSS para estilização rápida e eficiente.
 - **React Router**: Biblioteca para navegação em aplicações React.
 - **Axios**: Cliente HTTP para realizar requisições à API.
-- **Playwright ⏳**: Ferramenta para testes automatizados de aplicações web.
+- **Playwright**: Ferramenta para testes automatizados de aplicações web.
 
 ## Instalação
 
@@ -49,6 +49,24 @@ npm install
 ```sh
 npm run dev
 ```
+
+## Executando os testes
+
+1. Instale as dependências e inicie o servidor.
+
+2. Execute o Playwright para rodar os testes. Para visualizar os testes de forma mais interativa, use o parâmetro --ui:
+
+```
+npx playwright test --ui
+```
+
+No Playwright, clique no triângulo verde ao lado de `create-trip.spec.ts` para iniciar os testes.
+
+Após a execução dos testes, copie o UUID da URL que será exibida no formato `**/trips/UUID`. O UUID é um código de 36 caracteres. Certifique-se de copiá-lo corretamente.
+
+Cole o UUID na função `goToTripPage` no arquivo de teste `trip-details.spec.ts.`
+
+Execute os testes do arquivo `trip-details.spec.ts`.
 
 ## Documentação da API
 
