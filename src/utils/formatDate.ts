@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import type { DateRange } from "react-day-picker"
+import type { DateRange } from 'react-day-picker'
 
 export function formatDateRange(dateRange: DateRange) {
   if (!dateRange || !dateRange.from || !dateRange.to) {

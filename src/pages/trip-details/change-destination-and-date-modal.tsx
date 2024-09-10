@@ -1,11 +1,13 @@
-import { LucideX, LucideMapPin, LucideCalendar } from "lucide-react"
-import { Button } from "../../components/button"
-import { useState, type FormEvent } from "react"
-import { DateRange, DayPicker } from "react-day-picker"
-import "react-day-picker/dist/style.css"
-import { formatDate, formatDateRange } from "../../utils/formatDate"
-import { api } from "../../lib/axios"
-import { useParams } from "react-router-dom"
+import 'react-day-picker/dist/style.css'
+
+import { LucideCalendar, LucideMapPin, LucideX } from 'lucide-react'
+import { type FormEvent, useState } from 'react'
+import { DateRange, DayPicker } from 'react-day-picker'
+import { useParams } from 'react-router-dom'
+
+import { Button } from '../../components/button'
+import { api } from '../../lib/axios'
+import { formatDate, formatDateRange } from '../../utils/formatDate'
 
 interface ChangeDestinationAndDateModalProps {
   closeChangeDestinationAndDateModal: () => void
@@ -18,13 +20,15 @@ export function ChangeDestinationAndDateModal({
   closeChangeDestinationAndDateModal,
   destination,
   trip_start_at,
-  trip_ends_at
+  trip_ends_at,
 }: ChangeDestinationAndDateModalProps) {
   const { tripId } = useParams()
 
   const [newDestination, setNewDestination] = useState('')
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
-  const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>()
+  const [eventStartAndEndDates, setEventStartAndEndDates] = useState<
+    DateRange | undefined
+  >()
 
   function openDatePicker() {
     setIsDatePickerOpen(true)
@@ -48,18 +52,23 @@ export function ChangeDestinationAndDateModal({
     await api.put(`/trips/${tripId}`, {
       destination: newDestination,
       starts_at: eventStartAndEndDates.from,
-      ends_at: eventStartAndEndDates.to
+      ends_at: eventStartAndEndDates.to,
     })
 
     window.document.location.reload()
   }
 
-  const displayedDate = eventStartAndEndDates ? formatDateRange(eventStartAndEndDates) : 'Quando?'
-  const modalDescriptionDate = trip_start_at && trip_ends_at ? formatDate(trip_start_at, trip_ends_at) : null
+  const displayedDate = eventStartAndEndDates
+    ? formatDateRange(eventStartAndEndDates)
+    : 'Quando?'
+  const modalDescriptionDate =
+    trip_start_at && trip_ends_at
+      ? formatDate(trip_start_at, trip_ends_at)
+      : null
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
-      <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/60">
+      <div className="w-[640px] space-y-5 rounded-xl bg-zinc-900 px-6 py-5 shadow-shape">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Alterar local/data</h2>
@@ -70,28 +79,35 @@ export function ChangeDestinationAndDateModal({
 
           <p className="text-sm text-zinc-400">
             Sua viagem está atualmente marcada para{' '}
-            <span className="text-zinc-100 font-semibold">{destination}</span> nas datas de{' '}
-            <span className="text-zinc-100 font-semibold">{modalDescriptionDate}</span>. Selecione o novo local e data abaixo.
+            <span className="font-semibold text-zinc-100">{destination}</span>{' '}
+            nas datas de{' '}
+            <span className="font-semibold text-zinc-100">
+              {modalDescriptionDate}.
+            </span>{' '}
+            Selecione o novo local e data abaixo.
           </p>
         </div>
 
         <form onSubmit={changeDestinationAndDate} className="space-y-3">
-          <div className="h-14 flex-1 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
+          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <LucideMapPin className="size-5 text-zinc-400" />
             <input
               onChange={(event) => setNewDestination(event.target.value)}
-              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
+              className="flex-1 bg-transparent text-lg placeholder-zinc-400 outline-none"
               type="text"
               autoComplete="off"
               placeholder="Para onde você vai?"
             />
           </div>
 
-          <div className="h-14 flex-1 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
-            <button onClick={openDatePicker} className="flex items-center gap-2 text-left flex-1">
+          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
+            <button
+              onClick={openDatePicker}
+              className="flex flex-1 items-center gap-2 text-left"
+            >
               <LucideCalendar className="size-5 text-zinc-400" />
               <span
-               className={`text-lg w-56 ${displayedDate === 'Quando?' ? 'text-zinc-400' : 'text-zinc-50'}`}
+                className={`w-56 text-lg ${displayedDate === 'Quando?' ? 'text-zinc-400' : 'text-zinc-50'}`}
               >
                 {displayedDate}
               </span>
@@ -105,25 +121,30 @@ export function ChangeDestinationAndDateModal({
       </div>
 
       {isDatePickerOpen && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
-          <div className="rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/60">
+          <div className="space-y-5 rounded-xl bg-zinc-900 px-6 py-5 shadow-shape">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold">Selecione a data</h2>
-                <button data-testid="close-date-picker" onClick={closeDatePicker}>
+                <button
+                  data-testid="close-date-picker"
+                  onClick={closeDatePicker}
+                >
                   <LucideX className="size-5 text-zinc-400" />
                 </button>
               </div>
             </div>
 
-            <DayPicker classNames={{
-              day: "h-9 w-9 p-0 text-zinc-50 hover:rounded-xl hover:text-zinc-900",
-              day_range_start: "rounded-xl",
-              day_range_end: "rounded-xl",
-              day_selected: "rounded-xl bg-zinc-600 text-zinc-50 focus:bg-zinc-600",
-              day_today: "rounded-xl bg-zinc-100 text-zinc-900",
-              day_disabled: "text-zinc-500 opacity-50",
-            }}
+            <DayPicker
+              classNames={{
+                day: 'h-9 w-9 p-0 text-zinc-50 hover:rounded-xl hover:text-zinc-900',
+                day_range_start: 'rounded-xl',
+                day_range_end: 'rounded-xl',
+                day_selected:
+                  'rounded-xl bg-zinc-600 text-zinc-50 focus:bg-zinc-600',
+                day_today: 'rounded-xl bg-zinc-100 text-zinc-900',
+                day_disabled: 'text-zinc-500 opacity-50',
+              }}
               mode="range"
               selected={eventStartAndEndDates}
               onSelect={setEventStartAndEndDates}

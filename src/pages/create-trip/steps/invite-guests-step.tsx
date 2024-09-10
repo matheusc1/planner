@@ -1,5 +1,6 @@
-import { LucideUserRoundPlus, LucideArrowRight } from "lucide-react"
-import { Button } from "../../../components/button"
+import { LucideArrowRight, LucideUserRoundPlus } from 'lucide-react'
+
+import { Button } from '../../../components/button'
 
 interface InviteGuestsStepProps {
   openGuestsModal: () => void
@@ -10,18 +11,25 @@ interface InviteGuestsStepProps {
 export function InviteGuestsStep({
   openGuestsModal,
   emailsToInvite,
-  openConfirmTripModal
+  openConfirmTripModal,
 }: InviteGuestsStepProps) {
   return (
-    <div className="h-16 bg-zinc-900 p-4 rounded-xl flex items-center shadow-shape gap-3">
-      <button type="button" data-testid="guests-button" onClick={openGuestsModal} className="flex items-center gap-2 flex-1 text-left">
+    <div className="flex h-16 items-center gap-3 rounded-xl bg-zinc-900 p-4 shadow-shape">
+      <button
+        type="button"
+        data-testid="guests-button"
+        onClick={openGuestsModal}
+        className="flex flex-1 items-center gap-2 text-left"
+      >
         <LucideUserRoundPlus className="size-5 text-zinc-400" />
         {emailsToInvite.length > 0 ? (
-          <span className="text-zinc-100 text-lg flex-1">
+          <span className="flex-1 text-lg text-zinc-100">
             {emailsToInvite.length} pessoa(s) convidada(s)
           </span>
         ) : (
-          <span className="text-lg text-zinc-400 flex-1">Quem estará na viagem?</span>
+          <span className="flex-1 text-lg text-zinc-400">
+            Quem estará na viagem?
+          </span>
         )}
       </button>
 
